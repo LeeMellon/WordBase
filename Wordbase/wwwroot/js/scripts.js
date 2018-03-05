@@ -19,6 +19,7 @@ function myFunction(square)
     document.getElementById(square).style.backgroundColor = "#BB8FCE"
     playerTurn == 2;
     word += x;
+    newword.append(x);
     cells.push(y);
     console.log(word);
     console.log(cells);
