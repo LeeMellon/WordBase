@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Wordbase.Models
+using Wordbase.Models;
 using System;
 
 namespace Wordbase.Controllers
