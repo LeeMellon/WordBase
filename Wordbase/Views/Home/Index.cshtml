@@ -2,6 +2,11 @@
   Layout = "_Layout";
 }
 
+<center>
+  <h2 class="turn1">Player 1 Turn</h2>
+  <h2 class="turn2">Player 2 Turn</h2>
+  <button id="turnEnd" type="submit" class="btn btn-warning">End Turn</button>
+</center>
 <div class="container">
   <div id="row1" class="row">
     <div class="col-sm-1 spacer"></div>
@@ -19,10 +24,10 @@
   </div>
   <div id="row2" class="row">
     <div class="col-sm-1 spacer"></div>
-    <div id="A,2" class="col-sm-1 cell"></div>
-    <div id="B,2" class="col-sm-1 cell"></div>
-    <div id="C,2" class="col-sm-1 cell"></div>
-    <div id="D,2" class="col-sm-1 cell"></div>
+    <div id="A,2" class="col-sm-1 cell" onclick="myFunction('A,2')"></div>
+    <div id="B,2" class="col-sm-1 cell" onclick="myFunction('B,2')"></div>
+    <div id="C,2" class="col-sm-1 cell" onclick="myFunction('C,2')"></div>
+    <div id="D,2" class="col-sm-1 cell" onclick="myFunction(this.id)"></div>
     <div id="E,2" class="col-sm-1 cell"></div>
     <div id="F,2" class="col-sm-1 cell"></div>
     <div id="G,2" class="col-sm-1 cell"></div>

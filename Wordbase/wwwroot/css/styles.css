@@ -18,3 +18,11 @@ h1{
 .bot-side{
   background-color: #F1948A;
 }
+
+button{
+  margin-bottom: 10px;
+}
+
+.turn2{
+  display: none;
+}

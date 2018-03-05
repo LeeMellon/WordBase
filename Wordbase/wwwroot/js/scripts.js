@@ -1,3 +1,6 @@
+var word = "";
+var cells = [];
+
 function randomChar(){
   var text = "";
   var possible = "AAAAAAAABBCCDDDDEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNOOOOOOPPQRRRRRRSSSSTTTTTUUUUVVWWXYYZ";
@@ -6,11 +9,24 @@ function randomChar(){
   return text;
 }
 
-
+function myFunction(square)
+{
+  var playerTurn = 1;
+  if(playerTurn == 1)
+  {
+    var x = document.getElementById(square).innerHTML;
+    var y = document.getElementById(square).id;
+    document.getElementById(square).style.backgroundColor = "#BB8FCE"
+    playerTurn == 2;
+    word += x;
+    cells.push(y);
+    console.log(word);
+    console.log(cells);
+  }
+}
 
 
 $(function() {
-
   var letters = ["A","B","C","D","E","F","G","H","I","J"];
   for(var i  = 1; i <= 13; i++)
   {
@@ -21,4 +37,8 @@ $(function() {
       element.innerHTML = newChar;
     }
   }
+
+
+  // $("#turnEnd").click()
+
 });
