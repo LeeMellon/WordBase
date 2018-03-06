@@ -6,18 +6,24 @@ using Wordbase;
 
 namespace Wordbase.Models
 {
-    public class Turn
+    public class Player
     {
       private int _id;
-      private string _player;
+      private string _name;
       private string _word;
+      private List<string> _playedWords;
+      private List<List<string>> _cordsList;
+      private int _rndScore;
+      private int _playerScore;
 
-      public Turn(string player, string word, int id =0)
+      public Player(string name, int playerScore = 0, int id =0)
       {
         _id = id;
         _player = player;
-        _word = word;
+        _playerScore = playerScore;
       }
+
+      //add more getters/setters
 
       public void SetId(int newId)
       {
@@ -47,6 +53,26 @@ namespace Wordbase.Models
       public string GetWord()
       {
         return _word;
+      }
+
+      public List<string> GetPlayedWords()
+      {
+        return _playedWords;
+      }
+
+      public void AddPlayedWord(string playerWord)
+      {
+        _playedWords.Add(playerWord);
+      }
+
+      public void AddCordsList(List<string> cords)
+      {
+        _cordsList.Add(cords);
+      }
+
+      public List<List<string>> GetCordsList()
+      {
+        return _cordsList;
       }
 
 

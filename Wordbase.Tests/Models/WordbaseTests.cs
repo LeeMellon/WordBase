@@ -6,9 +6,9 @@ using Wordbase.Models;
 namespace Wordbase.Tests
 {
   [TestClass]
-  public class TurnTest : IDisposable
+  public class PlayerTest : IDisposable
   {
-    public TurnTest()
+    public PlayerTest()
     {
 
       DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=wordbase_test;";
@@ -16,7 +16,7 @@ namespace Wordbase.Tests
 
     public void Dispose()
     {
-      // Turn.DeleteGames();
+      // Player.DeleteGames();
     }
 
     // [TestMethod]
@@ -35,10 +35,10 @@ namespace Wordbase.Tests
     public void IsWord_TestIfWordMatches_Bool()
     {
       //arrange
-       Turn newTurn = new Turn("3", "ERROR");
-       newTurn.Save();
+       Player newPlayer = new Player("3", "ERROR");
+       newPlayer.Save();
       //action
-      bool result = newTurn.IsWord(newTurn.GetWord());
+      bool result = newPlayer.IsWord(newPlayer.GetWord());
 
       //assert
       Assert.AreEqual(result, true);
