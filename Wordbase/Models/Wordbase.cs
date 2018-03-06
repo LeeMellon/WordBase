@@ -169,17 +169,17 @@ namespace Wordbase.Models
         return targetIndex;
       }
 
-      public List<string> DeleteAfterId(int listId, int cordId)
-      {
-        List<string> popList = new List<string>();
-
-        List<string> targetList = _cordsList[listId];
-        for(int i = targetList.Length -1; i >= cordId; i--)
-        {
-          List<string> poppedCord = targetList.Pop(i);
-        }
-        _cordsList[listId] = targetList;
-        return _cordsList[listId];
-      }
+      // public List<string> DeleteAfterId(int listId, int cordId)
+      // {
+      //   List<string> popList = new List<string>();
+      //
+      //   List<string> targetList = _cordsList[listId];
+      //   for(int i = targetList.Length -1; i >= cordId; i--)
+      //   {
+      //     List<string> poppedCord = targetList.Pop(i);
+      //   }
+      //   _cordsList[listId] = targetList;
+      //   return _cordsList[listId];
+      // }
   }
 }

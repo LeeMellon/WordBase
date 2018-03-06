@@ -14,18 +14,21 @@ namespace Wordbase.Controllers
       return View();
 
     }
-    // [HttpPost("/")]
-    // public ActionResult NewWord()
-    // {
-    //   Player currentPlayer = new Player()
-    //   string newWord = Request.Form["newword"];
-    //   bool isWord = currentPlayer.IsWord(newWord);
-    //   if(isWord == true)
-    //   {
-    //     return newWord;
-    //   }
-    //   else
-    //   return RedirectToAction("Index");
-    // }
+    [HttpPost("/")]
+    public ActionResult NewWord()
+    {
+      List<List<string>> empty = new List<List<string>>();
+      Player currentPlayer = new Player("ERROR", empty, 0);
+      string newWord = Request.Form["newword"];
+      bool isWord = currentPlayer.IsWord(newWord);
+      if(isWord == true)
+      {
+        System.Console.WriteLine("true word");
+        return RedirectToAction("Index");
+      }
+      else
+      System.Console.WriteLine("false word");
+      return RedirectToAction("Index");
+    }
   }
 }
