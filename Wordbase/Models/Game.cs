@@ -15,10 +15,10 @@ namespace Wordbase.Models
       private List<string> _player2Base;
       private bool _isWin;
 
-      public Game
-      {
-        
-      }
+      // public Game
+      // {
+      //
+      // }
     }
 
 }

@@ -85,10 +85,12 @@ $(document).ready(function() {
       var newChar = randomChar()
       var element = document.getElementById(letters[j]+i);
       element.innerHTML = newChar;
+      sessionStorage.setItem((letters[j]+i), newChar);
       board.push(newChar);
     }
   }
   console.log(board);
+  console.log("session storage " + sessionStorage.getItem("A1"));
 
   // this needs to be tested
   $("#verifyWord").click(function(){

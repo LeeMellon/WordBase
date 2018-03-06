@@ -43,6 +43,6 @@ namespace Wordbase
 
     public static class DBConfiguration
    {
-       public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=wordbase;";
+       public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=word_base;";
    }
 }
