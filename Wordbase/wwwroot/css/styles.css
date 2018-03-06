@@ -26,3 +26,11 @@ button{
 .turn2{
   display: none;
 }
+
+.player1color {
+  background-color: #BB8FCE;
+}
+
+.player2color {
+  background-color: #F1948A;
+}
