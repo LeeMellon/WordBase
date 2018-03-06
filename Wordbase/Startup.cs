@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Wordbase
 {
@@ -39,4 +40,9 @@ namespace Wordbase
             });
         }
     }
+
+    public static class DBConfiguration
+   {
+       public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=wordbase;";
+   }
 }
