@@ -1,0 +1,28 @@
+.cell {
+  width: 30px;
+  height: 70px;
+  border: 1px solid black;
+  font-size: 30px;
+  text-align: center;
+  padding-top: 10px;
+}
+
+h1{
+  text-align: center;
+}
+
+.top-side{
+  background-color: #BB8FCE;
+}
+
+.bot-side{
+  background-color: #F1948A;
+}
+
+button{
+  margin-bottom: 10px;
+}
+
+.turn2{
+  display: none;
+}
