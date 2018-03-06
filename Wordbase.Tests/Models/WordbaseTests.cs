@@ -114,6 +114,25 @@ namespace Wordbase.Tests
     Assert.AreEqual(result, 2);
     }
 
+    [TestMethod]
+    public void DeleteAfterId_DeletesCordsAtIdAndAfter_List()
+    {
+      //arrange
+      List<List<string>> empty = new List<List<string>>();
+
+      Player newPlayer = new Player("ERROR", empty, 0);
+      newPlayer.Save();
+      List<string> newList = new List<string>(){"B1", "B2", "C3", "D3"};
+      empty.Add(newList);
+
+       //act
+       List<string> popList = newPlayer.DeleteAfterId(empty[0], newList[1].GetId());
+
+       //assert
+       Assert.AreEqual(newList[2], popList[1]);
+
+    }
+
   }
 
 

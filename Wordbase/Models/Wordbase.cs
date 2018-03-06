@@ -174,12 +174,13 @@ namespace Wordbase.Models
         List<string> popList = new List<string>();
 
         List<string> targetList = _cordsList[listId];
-        for(int i = targetList.Length -1; i >= cordId; i--)
+        for(int i = targetList.Count -1; i >= cordId; i--)
         {
-          List<string> poppedCord = targetList.Pop(i);
+          popList.Add(targetList[i]);
+          targetList.RemoveAt(i);
         }
         _cordsList[listId] = targetList;
-        return _cordsList[listId];
+        return popList;
       }
   }
 }
