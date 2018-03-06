@@ -58,6 +58,40 @@ function myFunction(square)
   }
 }
 
+function generateBoard(){
+  playerTurn.setPlayer(1);
+  var board = [];
+  var letters = ["A","B","C","D","E","F","G","H","I","J"];
+  for(var i  = 1; i <= 13; i++)
+  {
+    for( var j = 0;j<letters.length; j++)
+    {
+      var newChar = randomChar();
+      var element = document.getElementById(letters[j]+i);
+      element.innerHTML = newChar;
+      sessionStorage.setItem((letters[j]+i), newChar);
+      board.push(newChar);
+    }
+  }
+  console.log(board);
+}
+
+function reloadBoard(){
+  // feed in player
+  // feed in array for player1cells
+  // feed in array for player2cells
+  playerTurn.setPlayer(1);
+  var letters = ["A","B","C","D","E","F","G","H","I","J"];
+  for(var i  = 1; i <= 13; i++)
+  {
+    for( var j = 0;j<letters.length; j++)
+    {
+      var element = document.getElementById(letters[j]+i);
+      element.innerHTML = sessionStorage.getItem((letters[j]+i));
+    }
+  }
+}
+
 // function to check if beginning square is valid starting point
 
 // function to check if selected square is adjacent to previous choice
@@ -75,24 +109,33 @@ PlayerTurn.prototype.setPlayer = function(player) {
 
 
 $(document).ready(function() {
-  playerTurn.setPlayer(1);
-  var board = [];
-  var letters = ["A","B","C","D","E","F","G","H","I","J"];
-  for(var i  = 1; i <= 13; i++)
-  {
-    for( var j = 0;j<letters.length; j++)
-    {
-      var newChar = randomChar()
-      var element = document.getElementById(letters[j]+i);
-      element.innerHTML = newChar;
-      board.push(newChar);
-    }
-  }
-  console.log(board);
+  // playerTurn.setPlayer(1);
+  // var board = [];
+  // var letters = ["A","B","C","D","E","F","G","H","I","J"];
+  // for(var i  = 1; i <= 13; i++)
+  // {
+  //   for( var j = 0;j<letters.length; j++)
+  //   {
+  //     var newChar = randomChar();
+  //     var element = document.getElementById(letters[j]+i);
+  //     element.innerHTML = newChar;
+  //     sessionStorage.setItem((letters[j]+i), newChar);
+  //     board.push(newChar);
+  //   }
+  // }
+  // console.log(board);
+
+  $("#reset").click(function(){
+    generateBoard();
+  });
 
   // this needs to be tested
   $("#verifyWord").click(function(){
     $("#verify").val(word);
+  });
+
+  $("#reload").click(function(){
+    reloadBoard();
   });
 
   $("#turnEnd").click(function(event){
