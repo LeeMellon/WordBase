@@ -1,6 +1,8 @@
 var word = "";
 var cells = [];
 var playerTurn = new PlayerTurn;
+var PlayerOneCells = ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "J1"];
+var PlayerTwoCells = ["A13", "B13", "C13", "D13", "E13", "F13", "G13", "H13", "J13"];
 
 function PlayerTurn(){
   this.player = 0;
@@ -16,7 +18,6 @@ function randomChar(){
 
 function myFunction(square)
 {
-  // var playerTurn = 1;
   var player = playerTurn.getPlayer();
   var x = document.getElementById(square).innerHTML;
   var y = document.getElementById(square).id
@@ -24,10 +25,17 @@ function myFunction(square)
       if(player == 1)
       {
         document.getElementById(square).style.backgroundColor = "#BB8FCE";
+        if (!PlayerOneCells.includes(y)){
+          PlayerOneCells.push(y);
+          //make temp list, then on submit and validation push to main list
+        }
       }
       else if (player == 2)
       {
         document.getElementById(square).style.backgroundColor = "#F1948A";
+        if (!PlayerTwoCells.includes(y)){
+          PlayerTwoCells.push(y);
+        }
       }
       else
       {
@@ -39,8 +47,17 @@ function myFunction(square)
     cells.push(y);
     console.log(word);
     console.log(cells);
+    console.log("P1 " + PlayerOneCells);
+    console.log("P2 " + PlayerTwoCells);
   }
 }
+
+// function to check if beginning square is valid starting point
+
+// function to check if selected square is adjacent to previous choice
+
+// reset turn function
+
 
 PlayerTurn.prototype.getPlayer = function(player) {
   return playerTurn.player;
@@ -59,7 +76,7 @@ $(document).ready(function() {
     for( var j = 0;j<letters.length; j++)
     {
       var newChar = randomChar()
-      var element = document.getElementById(letters[j]+','+i);
+      var element = document.getElementById(letters[j]+i);
       element.innerHTML = newChar;
     }
   }
@@ -71,17 +88,19 @@ $(document).ready(function() {
     {
       console.log("Player 1 Turn End");
       playerTurn.setPlayer(2);
-      $(".turn1").show();
-      $(".turn2").hide();
+      $(".turn1").hide();
+      $(".turn2").show();
     }
     else if (playerTurn.getPlayer() == 2)
     {
       playerTurn.setPlayer(1);
       console.log("Player 2 Turn End");
-      $(".turn2").show();
-      $(".turn1").hide();
+      $(".turn2").hide();
+      $(".turn1").show();
     }
     word = "";
     cells = [];
+    $("#newword").text("Current Word: ");
+
   });
 });
