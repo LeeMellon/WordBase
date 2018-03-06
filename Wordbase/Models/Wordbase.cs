@@ -16,10 +16,11 @@ namespace Wordbase.Models
       private int _rndScore;
       private int _playerScore;
 
-      public Player(string name, int playerScore = 0, int id =0)
+      public Player(string name, List<List<string>> cordsList, int playerScore = 0, int id =0)
       {
         _id = id;
-        _player = player;
+        _name = name;
+        _cordsList = cordsList;
         _playerScore = playerScore;
       }
 
@@ -35,14 +36,14 @@ namespace Wordbase.Models
         return _id;
       }
 
-      public void SetPlayer(string player)
+      public void SetName(string name)
       {
-        _player = player;
+        _name = name;
       }
 
-      public string GetPlayer()
+      public string GetName()
       {
-        return _player;
+        return _name;
       }
 
       public void SetWord(string newWord)
@@ -82,10 +83,10 @@ namespace Wordbase.Models
         conn.Open();
 
         var cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"INSERT INTO games (player, word) VALUES (@player, @word);";
+        cmd.CommandText = @"INSERT INTO games (player, word) VALUES (@player, @score);";
 
-        cmd.Parameters.Add(new MySqlParameter("@player", this._player));
-        cmd.Parameters.Add(new MySqlParameter("@word", this._word));
+        cmd.Parameters.Add(new MySqlParameter("@player", this._name));
+        cmd.Parameters.Add(new MySqlParameter("@score", this._playerScore));
 
          cmd.ExecuteNonQuery();
 
@@ -150,6 +151,35 @@ namespace Wordbase.Models
 
         return testBool;
       }
-    }
 
+      public int GetCordIndex(string targetCord)
+      {
+        int targetIndex =0;
+        foreach(List<string> cordsList in _cordsList)
+        {
+
+          foreach(string cord in cordsList)
+          {
+            if (cord == targetCord)
+            {
+              targetIndex = cordsList.IndexOf(cord);
+            }
+          }
+        }
+        return targetIndex;
+      }
+
+      public List<string> DeleteAfterId(int listId, int cordId)
+      {
+        List<string> popList = new List<string>();
+
+        List<string> targetList = _cordsList[listId];
+        for(int i = targetList.Length -1; i >= cordId; i--)
+        {
+          List<string> poppedCord = targetList.Pop(i);
+        }
+        _cordsList[listId] = targetList;
+        return _cordsList[listId];
+      }
+  }
 }

@@ -35,15 +35,86 @@ namespace Wordbase.Tests
     public void IsWord_TestIfWordMatches_Bool()
     {
       //arrange
-       Player newPlayer = new Player("3", "ERROR");
+      List<List<string>> empty = new List<List<string>>();
+       Player newPlayer = new Player("ERROR", empty, 0);
        newPlayer.Save();
       //action
-      bool result = newPlayer.IsWord(newPlayer.GetWord());
+      bool result = newPlayer.IsWord("TEST");
 
       //assert
       Assert.AreEqual(result, true);
     }
 
-    public void
+    [TestMethod]
+    public void GetCordIndex_ReturnCorrectIndex_Int()
+    {
+      //arrange
+      List<List<string>> empty = new List<List<string>>();
+       Player newPlayer = new Player("ERROR", empty, 0);
+       newPlayer.Save();
+       List<string> newList = new List<string>(){"B1", "B2", "C3", "D3"};
+       newPlayer.AddCordsList(newList); //"TAGS"
+
+      //action
+      int result = newPlayer.GetCordIndex("B2");
+
+      //assert
+      Assert.AreEqual(result, 1);
+    }
+
+    [TestMethod]
+    public void AddCordsList_UpdatesCordsList_List()
+    {
+      //arrange
+      List<List<string>> empty = new List<List<string>>();
+       Player newPlayer = new Player("ERROR", empty, 0);
+       newPlayer.Save();
+       List<string> newList = new List<string>(){"B1", "B2", "C3", "D3"};
+       List<string> newList2 = new List<string>(){"B1", "B3", "C3", "D3"};
+      //  Console.WriteLine();
+
+      //action
+      newPlayer.AddCordsList(newList); //"TAGS"
+      newPlayer.AddCordsList(newList2); //MADE UP WORD
+
+      Console.WriteLine(newPlayer.GetName());
+      int result = newPlayer.GetCordIndex("B2");
+      List<List<string>> playerList = newPlayer.GetCordsList();
+
+      //assert
+      CollectionAssert.AreEqual(playerList[0], newList);
+    }
+
+
+    [TestMethod]
+    public void TestCordsList_UpdatesCordsList_List()
+    {
+      //arrange
+      List<List<string>> empty = new List<List<string>>();
+       Player newPlayer = new Player("ERROR", empty, 0);
+       newPlayer.Save();
+       List<string> newList = new List<string>(){"B1", "B2", "C3", "D3"};
+       List<string> newList2 = new List<string>(){"B1", "B3", "C3", "D3"};
+      //  Console.WriteLine();
+
+      //action
+      newPlayer.AddCordsList(newList); //"TAGS"
+      newPlayer.AddCordsList(newList2); //MADE UP WORD
+      List<List<string>> playerList = newPlayer.GetCordsList();
+      List<int> playerCordsList = new List<int>();
+      foreach(List<string> cordsList in playerList)
+      {
+        int index = cordsList.GetCordIndex("C3");
+        playerCordsList.Add(index);
+      }
+
+      int result = playerCordsList.Count;
+
+      //assert
+    Assert.AreEqual(result, 2);
+    }
+
   }
+
+
 }
