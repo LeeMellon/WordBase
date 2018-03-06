@@ -3,6 +3,7 @@ var cells = [];
 var playerTurn = new PlayerTurn;
 var PlayerOneCells = ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "J1"];
 var PlayerTwoCells = ["A13", "B13", "C13", "D13", "E13", "F13", "G13", "H13", "J13"];
+var TempCells = [];
 
 function PlayerTurn(){
   this.player = 0;
@@ -25,15 +26,19 @@ function myFunction(square)
       if(player == 1)
       {
         document.getElementById(square).style.backgroundColor = "#BB8FCE";
-        if (!PlayerOneCells.includes(y)){
-          PlayerOneCells.push(y);
+        // if (!PlayerOneCells.includes(y)){
+        //   PlayerOneCells.push(y);
+        if (!TempCells.includes(y)){
+          TempCells.push(y);
           //make temp list, then on submit and validation push to main list
         }
       }
       else if (player == 2)
       {
         document.getElementById(square).style.backgroundColor = "#F1948A";
-        if (!PlayerTwoCells.includes(y)){
+        // if (!PlayerTwoCells.includes(y)){
+        //   tempCells.push(x);
+        if (!TempCells.includes(y)){
           PlayerTwoCells.push(y);
         }
       }
@@ -49,6 +54,7 @@ function myFunction(square)
     console.log(cells);
     console.log("P1 " + PlayerOneCells);
     console.log("P2 " + PlayerTwoCells);
+    console.log("temp " + TempCells);
   }
 }
 
@@ -70,6 +76,7 @@ PlayerTurn.prototype.setPlayer = function(player) {
 
 $(document).ready(function() {
   playerTurn.setPlayer(1);
+  var board = [];
   var letters = ["A","B","C","D","E","F","G","H","I","J"];
   for(var i  = 1; i <= 13; i++)
   {
@@ -78,8 +85,16 @@ $(document).ready(function() {
       var newChar = randomChar()
       var element = document.getElementById(letters[j]+i);
       element.innerHTML = newChar;
+      board.push(newChar);
     }
   }
+  console.log(board);
+
+  // this needs to be tested
+  $("#verifyWord").click(function(){
+    $("#verify").val(word);
+  });
+
   $("#turnEnd").click(function(event){
     event.preventDefault();
     // run a bunch of checks here for valid play
