@@ -280,12 +280,11 @@ namespace Wordbase.Models
       }
 
 
-      public List<string> MasterKiller(Player currentPlayer, string targetCord)
+      public void MasterKiller(Player currentPlayer, string targetCord)
       {
         List<string> popList = new List<string>(){targetCord}; //list of removed coordinates
         List<List<string>> playerWords = currentPlayer.GetCordsList();
-        // Console.WriteLine("playerWords.count " + playerWords.Count);
-         //list of all lists of coordinates
+
         while(popList.Count > 0)
         {
           for(int p = 0; p < playerWords.Count; p ++)
@@ -294,12 +293,10 @@ namespace Wordbase.Models
             {
               if(playerWords[i].Count > 0)
               {
-                // Console.WriteLine("player words i at 0 " + playerWords[i][0]);
-                // Console.WriteLine("poplist at 0 " + popList[0]);
+
                 if (currentPlayer.IsIn(playerWords[i], popList[0]) == true)
                 {
                   int targetIndex = currentPlayer.GetCordIndex(playerWords[i], popList[0]);
-                  // Console.WriteLine("this is targetIndex" + targetIndex);
                   List<string> toPop = currentPlayer.DeleteAfterId(i, targetIndex);
                   popList.AddRange(toPop);
                 }
@@ -308,13 +305,12 @@ namespace Wordbase.Models
               {
                 continue;
               }
-              // Console.WriteLine("Poplist count after search " + popList.Count);
             }
           }
           popList.RemoveAt(0);
         }
         _cordsList = playerWords;
-        return popList;
+        // return popList;
       }
 
       public List<string> MasterCordsList(Player currentPlayer)
@@ -336,7 +332,7 @@ namespace Wordbase.Models
       //   string playerNumber  = Deck["player"];
       //   List<string> player1Cords= Deck["player1cells"];
       //   List<string> player2Cords = Deck["player2cells"];
-      //   Player newPlayer =Player.
+      //
       //
       // }
 

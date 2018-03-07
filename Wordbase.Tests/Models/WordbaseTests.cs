@@ -139,7 +139,7 @@ namespace Wordbase.Tests
       newPlayer.AddCordsList(newList4);
 
       //act
-      List<string> result = newPlayer.MasterKiller(newPlayer, "B2");
+      newPlayer.MasterKiller(newPlayer, "B2");
       List<List<string>> cordList = newPlayer.GetCordsList();
       List<string> practice = newPlayer.MasterCordsList(newPlayer);
 
