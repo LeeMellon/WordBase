@@ -8,7 +8,15 @@
   <h3 id="newword">Current Word: </h3>
   @if (@Model != null)
   {
-    <input id="isword" type="hidden" name="isword" value=@Model>
+    <input id="isword" type="text" name="isword" value=@Model["valid"]>
+    <input id="word" type="text" name="word" value=@Model["word"]>
+    <input id="p1cells" type="text" name="p1cells" value=@Model["player1cells"]>
+    <ul>
+      @foreach (var cell in @Model["player1cells"])
+      {
+        <li class="p1">@cell</li>
+      }
+    </ul>
   }
     <form id="#verifyForm" action="/" method="post">
     <input id="verify" type="hidden" name="newword" value="">

@@ -104,6 +104,11 @@ function isWord(){
   alert(result);
 }
 
+// function to populate squaes with correct colors
+function fillInColors(p1cells, p2cells){
+
+}
+
 // function to check if beginning square is valid starting point
 
 // function to check if selected square is adjacent to previous choice
@@ -121,21 +126,6 @@ PlayerTurn.prototype.setPlayer = function(player) {
 
 
 $(document).ready(function() {
-  // playerTurn.setPlayer(1);
-  // var board = [];
-  // var letters = ["A","B","C","D","E","F","G","H","I","J"];
-  // for(var i  = 1; i <= 13; i++)
-  // {
-  //   for( var j = 0;j<letters.length; j++)
-  //   {
-  //     var newChar = randomChar();
-  //     var element = document.getElementById(letters[j]+i);
-  //     element.innerHTML = newChar;
-  //     sessionStorage.setItem((letters[j]+i), newChar);
-  //     board.push(newChar);
-  //   }
-  // }
-  // console.log(board);
 
   $("#reset").click(function(){
     generateBoard();
@@ -148,7 +138,17 @@ $(document).ready(function() {
 
   $("#reload").click(function(){
 
-    reloadBoard(1, ["A1", "A2", "B3", "C4"], ["J10", "I9", "H8", "I8", "I7"]);
+    // reloadBoard(1, ["A1", "A2", "B3", "C4"], ["J10", "I9", "H8", "I8", "I7"]);
+    // var p1cells = ["A1", "A2", "B3", "C4"];
+
+    var p1cells = document.getElementsByClassName("p1");
+    var p1ArrayArray = [];
+    for(var i = 0; i < test.length; i++)
+    {
+      p1Array.push(test[i].innerHTML);
+    }
+
+    reloadBoard(1, p1Array, ["J10", "I9", "H8", "I8", "I7"]);
     isWord();
   });
 

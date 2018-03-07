@@ -18,18 +18,29 @@ namespace Wordbase.Controllers
     public ActionResult NewWord()
     {
       List<List<string>> empty = new List<List<string>>();
+      Dictionary<string, object> model = new Dictionary<string, object>();
+
       Player currentPlayer = new Player("ERROR", empty, 0);
+      // List<string>playerOneCells = Request.Form["p1cells"];
+      List<string> playerOneCells = new List<string>{"A1", "A2", "B3", "C4"};
       string newWord = Request.Form["newword"];
       bool isWord = currentPlayer.IsWord(newWord);
-      string test = "test";
       if(isWord == true)
       {
+        model.Add("valid", "true");
         System.Console.WriteLine("true word");
-        return View("Index", newWord);
+        // return View("Index", newWord);
       }
       else
-      System.Console.WriteLine("false word");
-      return View("Index", newWord);
+      {
+        model.Add("valid", "false");
+        System.Console.WriteLine("false word");
+        // return View("Index", newWord);
+      }
+      model.Add("word", newWord);
+      model.Add("player1cells", playerOneCells);
+      return View("Index", model);
     }
+
   }
 }
