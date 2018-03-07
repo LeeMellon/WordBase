@@ -10,7 +10,9 @@ namespace Wordbase.Models
     {
       private int _id;
       private string _name;
-      private string _word;
+      // private string _word;
+      private List<string> _player1Base;
+      private List<string> _player2Base;
       private List<string> _playedWords;
       private List<List<string>> _cordsList;
       private int _rndScore;
@@ -20,11 +22,11 @@ namespace Wordbase.Models
       {
         _id = id;
         _name = name;
+        _player1Base = new List<string>(){"A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "J1"};
+        _player2Base = new List<string>(){"A13", "B13", "C13", "D13", "E13", "F13", "G13", "H13", "J13"};
         _cordsList = cordsList;
         _playerScore = playerScore;
       }
-
-      //add more getters/setters
 
       public void SetId(int newId)
       {
@@ -34,6 +36,16 @@ namespace Wordbase.Models
       public int GetId()
       {
         return _id;
+      }
+
+      public List<string> GetBase1()
+      {
+        return _player1Base;
+      }
+
+      public List<string> GetBase2()
+      {
+        return _player2Base;
       }
 
       public void SetName(string name)
@@ -46,14 +58,23 @@ namespace Wordbase.Models
         return _name;
       }
 
-      public void SetWord(string newWord)
+      public List<string> GetCordsBundle(Player currentPlayer)
       {
-        _word = newWord;
-      }
-
-      public string GetWord()
-      {
-        return _word;
+        int id = currentPlayer.GetId();
+        List<string> baseCords = new List<string>();
+        List<string> bundle = currentPlayer.MasterCordsList(currentPlayer);
+        if(id%2 == 1)
+        {
+          baseCords = currentPlayer.GetBase1();
+        }
+        else
+        {
+          baseCords = currentPlayer.GetBase2();
+        }
+        bundle.AddRange(baseCords);
+        Console.WriteLine("baseCords" + baseCords[8]);
+        Console.WriteLine("bundle" + bundle[0]);
+        return bundle;
       }
 
       public List<string> GetPlayedWords()
@@ -74,6 +95,30 @@ namespace Wordbase.Models
       public List<List<string>> GetCordsList()
       {
         return _cordsList;
+      }
+
+      public bool winCheck(Player currentPlayer)
+      {
+        bool isWin = false;
+        List<string> opponentBase = new List<string>();
+        int playerId = currentPlayer.GetId();
+        List<string> currentPlayerCords = currentPlayer.MasterCordsList(currentPlayer);
+        if(playerId%2 == 1)
+        {
+          opponentBase = currentPlayer.GetBase2();
+        }
+        else
+        {
+          opponentBase = currentPlayer.GetBase1();
+        }
+        foreach(string cord in currentPlayerCords)
+        {
+          if(opponentBase.Contains(cord) == true)
+          {
+            isWin = true;
+          }
+        }
+        return isWin;
       }
 
 
@@ -152,9 +197,24 @@ namespace Wordbase.Models
         return testBool;
       }
 
+
+      public bool IsIn(List<string> playerWords, string targetCord)
+      {
+        bool isIn = false;
+
+        foreach(string cord in playerWords)
+        {
+          if (cord == targetCord)
+          {
+            isIn = true;
+          }
+        }
+        return isIn;
+      }
+
       public int GetCordIndex(List<string> playerWords, string targetCord)
       {
-        int targetIndex =0;
+        int targetIndex = 0;
 
         foreach(string cord in playerWords)
         {
@@ -162,6 +222,7 @@ namespace Wordbase.Models
           {
             targetIndex = playerWords.IndexOf(cord);
           }
+
         }
         return targetIndex;
       }
@@ -176,7 +237,6 @@ namespace Wordbase.Models
           popList.Insert(0, targetList[i]);
           targetList.RemoveAt(i);
           _cordsList[listId] = targetList;
-          Console.WriteLine("CordsList " + targetList[0]);
         }
         popList.RemoveAt(0);
         return popList;
@@ -185,20 +245,52 @@ namespace Wordbase.Models
 
       public List<string> MasterKiller(Player currentPlayer, string targetCord)
       {
-        List<string> popList = new List<string>();
+        List<string> popList = new List<string>(){targetCord}; //list of removed coordinates
         List<List<string>> playerWords = currentPlayer.GetCordsList();
-        for(int i = 0; i < playerWords.Count; i++)
+        // Console.WriteLine("playerWords.count " + playerWords.Count);
+         //list of all lists of coordinates
+        while(popList.Count > 0)
         {
-          while(popList.Count > 0)
+          for(int p = 0; p < playerWords.Count; p ++)
           {
-            int targetIndex = currentPlayer.GetCordIndex(playerWords[i], targetCord);
-            Console.WriteLine("this is targetIndex" + targetIndex);
-            List<string> toPop = currentPlayer.DeleteAfterId(i, targetIndex);
-            // Console.WriteLine("C3 " + toPop[0] + "D3 " + toPop[1]);
-            popList.AddRange(toPop);
+            for(int i = 0; i < playerWords.Count; i++)
+            {
+              if(playerWords[i].Count > 0)
+              {
+                // Console.WriteLine("player words i at 0 " + playerWords[i][0]);
+                // Console.WriteLine("poplist at 0 " + popList[0]);
+                if (currentPlayer.IsIn(playerWords[i], popList[0]) == true)
+                {
+                  int targetIndex = currentPlayer.GetCordIndex(playerWords[i], popList[0]);
+                  // Console.WriteLine("this is targetIndex" + targetIndex);
+                  List<string> toPop = currentPlayer.DeleteAfterId(i, targetIndex);
+                  popList.AddRange(toPop);
+                }
+              }
+              else
+              {
+                continue;
+              }
+              // Console.WriteLine("Poplist count after search " + popList.Count);
+            }
+          }
+          popList.RemoveAt(0);
+        }
+        _cordsList = playerWords;
+        return popList;
+      }
+
+      public List<string> MasterCordsList(Player currentPlayer)
+      {
+        List<string> cleanCordsList = new List<string>{};
+        foreach(List<string> list in currentPlayer._cordsList)
+        {
+          foreach(string cord in list)
+          {
+            cleanCordsList.Add(cord);
           }
         }
-        return popList;
+        return cleanCordsList;
       }
 
   }

@@ -17,7 +17,7 @@ namespace Wordbase.Controllers
     // [HttpPost("/")]
     // public ActionResult NewWord()
     // {
-    //   Player currentPlayer = new Player()
+    //   Player currentPlayer = new Player();
     //   string newWord = Request.Form["newword"];
     //   bool isWord = currentPlayer.IsWord(newWord);
     //   if(isWord == true)
