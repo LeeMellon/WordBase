@@ -21,14 +21,15 @@ namespace Wordbase.Controllers
       Player currentPlayer = new Player("ERROR", empty, 0);
       string newWord = Request.Form["newword"];
       bool isWord = currentPlayer.IsWord(newWord);
+      string test = "test";
       if(isWord == true)
       {
         System.Console.WriteLine("true word");
-        return RedirectToAction("Index");
+        return View("Index", newWord);
       }
       else
       System.Console.WriteLine("false word");
-      return RedirectToAction("Index");
+      return View("Index", newWord);
     }
   }
 }

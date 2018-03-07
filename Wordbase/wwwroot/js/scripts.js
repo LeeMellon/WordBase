@@ -76,11 +76,12 @@ function generateBoard(){
   console.log(board);
 }
 
-function reloadBoard(){
+function reloadBoard(player, p1cells, p2cells){
+  // 1, ["A1", "A2", "B3", "C4"], ["J10", "I9", "H8", "I8", "I7"]
   // feed in player
   // feed in array for player1cells
   // feed in array for player2cells
-  playerTurn.setPlayer(1);
+  playerTurn.setPlayer(player);
   var letters = ["A","B","C","D","E","F","G","H","I","J"];
   for(var i  = 1; i <= 13; i++)
   {
@@ -90,6 +91,17 @@ function reloadBoard(){
       element.innerHTML = sessionStorage.getItem((letters[j]+i));
     }
   }
+  for(var i=0; i < p1cells.length; i++){
+    $("#"+p1cells[i]).addClass("player1color");
+  }
+  for(var i=0; i < p2cells.length; i++){
+    $("#"+p2cells[i]).addClass("player2color");
+  }
+}
+
+function isWord(){
+  var result = document.getElementById("isword").value;
+  alert(result);
 }
 
 // function to check if beginning square is valid starting point
@@ -135,7 +147,9 @@ $(document).ready(function() {
   });
 
   $("#reload").click(function(){
-    reloadBoard();
+
+    reloadBoard(1, ["A1", "A2", "B3", "C4"], ["J10", "I9", "H8", "I8", "I7"]);
+    isWord();
   });
 
   $("#turnEnd").click(function(event){
