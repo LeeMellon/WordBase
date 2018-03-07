@@ -3,7 +3,7 @@ var cells = [];
 var playerTurn = new PlayerTurn;
 var PlayerOneCells = ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "J1"];
 var PlayerTwoCells = ["A13", "B13", "C13", "D13", "E13", "F13", "G13", "H13", "J13"];
-var TempCells = [];
+// var TempCells = [];
 
 function PlayerTurn(){
   this.player = 0;
@@ -21,15 +21,19 @@ function myFunction(square)
 {
   var player = playerTurn.getPlayer();
   var x = document.getElementById(square).innerHTML;
-  var y = document.getElementById(square).id
+  var y = document.getElementById(square).id;
   if(!cells.includes(y)) {
       if(player == 1)
       {
         document.getElementById(square).style.backgroundColor = "#BB8FCE";
         // if (!PlayerOneCells.includes(y)){
         //   PlayerOneCells.push(y);
-        if (!TempCells.includes(y)){
-          TempCells.push(y);
+        if(startingCheck(player,square))
+        {
+          if (!cells.includes(y)){
+            cells.push(y);
+            //make temp list, then on
+          }
           //make temp list, then on submit and validation push to main list
         }
       }
@@ -38,8 +42,11 @@ function myFunction(square)
         document.getElementById(square).style.backgroundColor = "#F1948A";
         // if (!PlayerTwoCells.includes(y)){
         //   tempCells.push(x);
-        if (!TempCells.includes(y)){
-          PlayerTwoCells.push(y);
+        if(startingCheck(player,square))
+        {
+          if (!cells.includes(y)){
+            cells.push(y);
+          }
         }
       }
       else
@@ -54,7 +61,7 @@ function myFunction(square)
     console.log(cells);
     console.log("P1 " + PlayerOneCells);
     console.log("P2 " + PlayerTwoCells);
-    console.log("temp " + TempCells);
+    // console.log("temp " + TempCells);
   }
 }
 
@@ -104,12 +111,37 @@ function isWord(){
   alert(result);
 }
 
-// function to populate squaes with correct colors
-function fillInColors(p1cells, p2cells){
-
-}
 
 // function to check if beginning square is valid starting point
+function startingCheck(player,square){
+    if(cells.length == 0)
+    {
+      if(player == 1)
+      {
+        if(!PlayerOneCells.includes(square))
+        {
+          document.getElementById(square).style.backgroundColor = "white";
+          alert("Not a valid start");
+          return false;
+        }
+        else {
+          return true;
+        }
+      }
+    if(player == 2)
+    {
+      if(!PlayerOneCells.includes(square))
+      {
+        document.getElementById(square).style.backgroundColor = "white";
+        alert("Not a valid start");
+        return false;
+      }
+      else {
+        return true;
+      }
+    }
+  }
+}
 
 // function to check if selected square is adjacent to previous choice
 
@@ -134,6 +166,7 @@ $(document).ready(function() {
   // this needs to be tested
   $("#verifyWord").click(function(){
     $("#verify").val(word);
+    $("#newp1cells").val(cells);
   });
 
   $("#reload").click(function(){
@@ -142,10 +175,10 @@ $(document).ready(function() {
     // var p1cells = ["A1", "A2", "B3", "C4"];
 
     var p1cells = document.getElementsByClassName("p1");
-    var p1ArrayArray = [];
-    for(var i = 0; i < test.length; i++)
+    var p1Array = [];
+    for(var i = 0; i < p1cells.length; i++)
     {
-      p1Array.push(test[i].innerHTML);
+      p1Array.push(p1cells[i].innerHTML);
     }
 
     reloadBoard(1, p1Array, ["J10", "I9", "H8", "I8", "I7"]);
