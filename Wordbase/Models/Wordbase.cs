@@ -121,6 +121,29 @@ namespace Wordbase.Models
         return isWin;
       }
 
+      public void PlayerSave()
+      {
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"INSERT INTO players (name, player_base, cords_list, played_words) VALUES (@name, @player_base, @cords_list, @played_words);";
+
+        cmd.Parameters.Add(new MySqlParameter("@name", this._name));
+        cmd.Parameters.Add(new MySqlParameter("@player_base", this._player1Base));
+        cmd.Parameters.Add(new MySqlParameter("@cords_list", this._cordsList));
+        cmd.Parameters.Add(new MySqlParameter("@played_words", this._playedWords));
+
+         cmd.ExecuteNonQuery();
+
+         _id = (int) cmd.LastInsertedId;
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+      }
+
 
       public void Save()
       {
@@ -143,6 +166,19 @@ namespace Wordbase.Models
         }
       }
 
+      public bool IsUsed(Player currentPlayer, string newWord)
+      {
+        List<string> playerWords = currentPlayer.GetPlayedWords();
+        if(playerWords.Contains(newWord) == true)
+        {
+          return true;
+        }
+        else
+        {
+          return false;
+        }
+      }
+
       public static void DeleteGames()
       {
         MySqlConnection conn = DB.Connection();
@@ -159,6 +195,7 @@ namespace Wordbase.Models
           conn.Dispose();
         }
       }
+
 
       public bool IsWord(string newWord)
       {
@@ -292,6 +329,16 @@ namespace Wordbase.Models
         }
         return cleanCordsList;
       }
+      //
+      // public Dictionary<string,object> InspectorDeck(Dictionary<string,object> Deck)
+      // {
+      //   string word  = Deck["word"];
+      //   string playerNumber  = Deck["player"];
+      //   List<string> player1Cords= Deck["player1cells"];
+      //   List<string> player2Cords = Deck["player2cells"];
+      //   Player newPlayer =Player.
+      //
+      // }
 
   }
 }
