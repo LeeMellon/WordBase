@@ -152,18 +152,15 @@ namespace Wordbase.Models
         return testBool;
       }
 
-      public int GetCordIndex(string targetCord)
+      public int GetCordIndex(List<string> playerWords, string targetCord)
       {
         int targetIndex =0;
-        foreach(List<string> cordsList in _cordsList)
-        {
 
-          foreach(string cord in cordsList)
+        foreach(string cord in playerWords)
+        {
+          if (cord == targetCord)
           {
-            if (cord == targetCord)
-            {
-              targetIndex = cordsList.IndexOf(cord);
-            }
+            targetIndex = playerWords.IndexOf(cord);
           }
         }
         return targetIndex;
@@ -176,11 +173,33 @@ namespace Wordbase.Models
         List<string> targetList = _cordsList[listId];
         for(int i = targetList.Count -1; i >= cordId; i--)
         {
-          popList.Add(targetList[i]);
+          popList.Insert(0, targetList[i]);
           targetList.RemoveAt(i);
+          _cordsList[listId] = targetList;
+          Console.WriteLine("CordsList " + targetList[0]);
         }
-        _cordsList[listId] = targetList;
+        popList.RemoveAt(0);
         return popList;
       }
+
+
+      public List<string> MasterKiller(Player currentPlayer, string targetCord)
+      {
+        List<string> popList = new List<string>();
+        List<List<string>> playerWords = currentPlayer.GetCordsList();
+        for(int i = 0; i < playerWords.Count; i++)
+        {
+          while(popList.Count > 0)
+          {
+            int targetIndex = currentPlayer.GetCordIndex(playerWords[i], targetCord);
+            Console.WriteLine("this is targetIndex" + targetIndex);
+            List<string> toPop = currentPlayer.DeleteAfterId(i, targetIndex);
+            // Console.WriteLine("C3 " + toPop[0] + "D3 " + toPop[1]);
+            popList.AddRange(toPop);
+          }
+        }
+        return popList;
+      }
+
   }
 }
