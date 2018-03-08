@@ -21,36 +21,34 @@ namespace Wordbase.Controllers
       List<List<string>> empty = new List<List<string>>();
       Dictionary<string, object> model = new Dictionary<string, object>();
 
-      Player currentPlayer = new Player("Player1", empty, 0);
-      // List<string> playerOneCells = Request.Form["newp1cells"];
+      string newPlayer = Request.Form["newplayer"];
+
+      Player currentPlayer = new Player(newPlayer, empty, 0);
+
       string playerOneCell = Request.Form["newp1cells"];
-      string[] newCells = playerOneCell.Split(',');
-      System.Console.WriteLine("newCells: " + newCells[0]);
+      string[] newCells1 = playerOneCell.Split(',');
+      // System.Console.WriteLine("newCells: " + newCells[0]);
+      // List<string[]> playerOneCells = new List<string[]>() {newCells};
+      // System.Console.WriteLine("playerOneCells" + playerOneCells);
 
-      List<string[]> playerOneCells = new List<string[]>() {newCells};
-      // string[] playerOneCells = Request.Form["newp1cells"].Split('');
-      // List<string> testList = playerOneCells.Split(',');
+      string playerTwoCell = Request.Form["newp2cells"];
+      string[] newCells2 = playerTwoCell.Split(',');
 
-      System.Console.WriteLine("playerOneCells" + playerOneCells);
-      // System.Console.WriteLine("testList" + testList[0]);
-
-      // List<string> playerOneCells = new List<string>{"A1", "A2", "B3", "C4"};
       string newWord = Request.Form["newword"];
       bool isWord = currentPlayer.IsWord(newWord);
       if(isWord == true)
       {
         model.Add("valid", "true");
         System.Console.WriteLine("true word");
-        // return View("Index", newWord);
       }
       else
       {
         model.Add("valid", "false");
         System.Console.WriteLine("false word");
-        // return View("Index", newWord);
       }
       model.Add("word", newWord);
-      model.Add("player1cells", newCells);
+      model.Add("player1cells", newCells1);
+      model.Add("player2cells", newCells2);
       return View("Index", model);
     }
 
