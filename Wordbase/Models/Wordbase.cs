@@ -278,36 +278,40 @@ namespace Wordbase.Models
       }
 
 
-      public void MasterKiller(Player opposingPlayer, string targetCord)
+      public void MasterKiller(Player opposingPlayer, string targetString)
       {
-        List<string> popList = new List<string>(){targetCord}; //list of removed coordinates
+        string newTargetString = targetString;
+        string[] targetCords = newTargetString.Split(',');
         List<List<string>> playerWords = opposingPlayer.GetCordsList();
 
-        while(popList.Count > 0)
+        foreach(string cord in targetCords)
         {
-          for(int p = 0; p < playerWords.Count; p ++)
+          List<string> popList = new List<string>(){cord}; //list of removed coordinates
+          while(popList.Count > 0)
           {
-            for(int i = 0; i < playerWords.Count; i++)
+            for(int p = 0; p < playerWords.Count; p ++)
             {
-              if(playerWords[i].Count > 0)
+              for(int i = 0; i < playerWords.Count; i++)
               {
-
-                if (opposingPlayer.IsIn(playerWords[i], popList[0]) == true)
+                if(playerWords[i].Count > 0)
                 {
-                  int targetIndex = opposingPlayer.GetCordIndex(playerWords[i], popList[0]);
-                  List<string> toPop = opposingPlayer.DeleteAfterId(i, targetIndex);
-                  popList.AddRange(toPop);
+                  if (opposingPlayer.IsIn(playerWords[i], popList[0]) == true)
+                  {
+                    int targetIndex = opposingPlayer.GetCordIndex(playerWords[i], popList[0]);
+                    List<string> toPop = opposingPlayer.DeleteAfterId(i, targetIndex);
+                    popList.AddRange(toPop);
+                  }
+                }
+                else
+                {
+                  continue;
                 }
               }
-              else
-              {
-                continue;
-              }
             }
+            popList.RemoveAt(0);
           }
-          popList.RemoveAt(0);
         }
-        _cordsList = playerWords;
+        opposingPlayer._cordsList = playerWords;
         // return popList;
       }
 
