@@ -95,7 +95,7 @@ namespace Wordbase.Models
         return _cordsList;
       }
 
-      public bool winCheck(Player currentPlayer)
+      public bool WinCheck(Player currentPlayer)
       {
         bool isWin = false;
         List<string> opponentBase = new List<string>();
