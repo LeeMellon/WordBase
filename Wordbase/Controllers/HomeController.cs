@@ -15,6 +15,7 @@ namespace Wordbase.Controllers
       return View();
 
     }
+
     [HttpPost("/")]
     public ActionResult NewWord()
     {
@@ -34,10 +35,39 @@ namespace Wordbase.Controllers
       string playerTwoCell = Request.Form["newp2cells"];
       string[] newCells2 = playerTwoCell.Split(',');
 
+
+    [HttpPost("PseudoCode")]
+    public ActionResult PESUDO()
+    {
+      Player player1 = new Player(name);
+      Player player2 = new Player(name);
+      player1.Save();
+      player2.Save();
+      string word = word;
+      bool used = player1.IsUsed(player1, word)
+      if (used == true)
+      {
+        dosomething
+      }
+      else
+      {
+        bool isWord = player1.IsWord(word)
+        if(isWord == false)
+        {
+          dosomething
+        }
+        else
+        {
+          player1.AddPlayedWord(word)
+          player2
+        }
+      }
+
       string newWord = Request.Form["newword"];
       bool isWord = currentPlayer.IsWord(newWord);
       if(isWord == true)
       {
+
         model.Add("valid", "true");
         System.Console.WriteLine("true word");
       }
@@ -51,6 +81,13 @@ namespace Wordbase.Controllers
       model.Add("player1cells", newCells1);
       model.Add("player2cells", newCells2);
       return View("Index", model);
+    }
+
+
+        return newWord;
+      }
+      else
+      return RedirectToAction("Index");
     }
 
   }
