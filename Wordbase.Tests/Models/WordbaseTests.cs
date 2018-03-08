@@ -133,13 +133,13 @@ namespace Wordbase.Tests
       newPlayer.AddCordsList(newList);
       List<string> newList2 = new List<string>(){"A1", "B2", "C2", "C3"};
       newPlayer.AddCordsList(newList2);
-      List<string> newList3 = new List<string>(){"D2", "D3", "C4", "C5"};
+      List<string> newList3 = new List<string>(){"D1", "C2", "D3", "D4"};
       newPlayer.AddCordsList(newList3);
       List<string> newList4 = new List<string>(){"C2", "B3", "B4", "B5", "A6", "A7" };
       newPlayer.AddCordsList(newList4);
 
       //act
-      newPlayer.MasterKiller(newPlayer, "B2");
+      newPlayer.MasterKiller(newPlayer, "B3,B2,C2" );
       List<List<string>> cordList = newPlayer.GetCordsList();
       List<string> practice = newPlayer.MasterCordsList(newPlayer);
 
