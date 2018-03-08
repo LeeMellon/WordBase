@@ -35,9 +35,9 @@ namespace Wordbase.Controllers
       {
         Console.WriteLine("no player");
       }
-      Player currentPlayer = new Player(newPlayer,playedWordsBlank, empty, 0);
+      Player currentPlayer = new Player(newPlayer);
       currentPlayer.Save();
-      Player otherPlayer = new Player(oldPlayer, playedWordsBlank, empty, 0);
+      Player otherPlayer = new Player(oldPlayer);
       otherPlayer.Save();
 
       string playerOneCell = Request.Form["newp1cells"];
@@ -47,15 +47,31 @@ namespace Wordbase.Controllers
       // string[] newCells2 = playerTwoCell.Split(',');
 
       string newWord = Request.Form["newword"];
+      bool isUsed = false;
 
-      bool isUsed = currentPlayer.IsUsed(currentPlayer, newWord);
-      if(isUsed == true)
+      if(currentPlayer.GetName() == "1")
       {
-        model.Add("used", "true");
+        isUsed = currentPlayer.IsUsed1(currentPlayer, newWord);
+        if(isUsed == true)
+        {
+          model.Add("used", "true");
+        }
+        else
+        {
+          model.Add("used", "false");
+        }
       }
       else
       {
-        model.Add("used", "false");
+        isUsed= currentPlayer.IsUsed2(currentPlayer, newWord);
+        if(isUsed == true)
+        {
+          model.Add("used", "true");
+        }
+        else
+        {
+          model.Add("used", "false");
+        }
       }
 
       bool isWord = currentPlayer.IsWord(newWord);
@@ -68,67 +84,83 @@ namespace Wordbase.Controllers
         model.Add("valid", "false");
       }
 
-      if (!isUsed && isWord)
+      if (!isUsed && isWord && currentPlayer.GetName() == "1")
       {
-        currentPlayer.AddPlayedWord(newWord);
-
-        // master killer
-        // string[] playedCells = "";
-        // string playedCells = "";
 
         string[] playedCells = new string[]{};
         if (newPlayer == "1")
         {
           // playedCells = newCells1;
           playedCells = playerOneCell.Split(',');
-          currentPlayer.AddCordsList(playedCells);
-          List<List<string>> test1 = currentPlayer.GetCordsList();
-          Console.WriteLine("test1" + test1[0][1]);
+          currentPlayer.AddCordsList1(playedCells);
+          currentPlayer.AddPlayer1PlayedWord(newWord);
+          currentPlayer.MasterKiller1(otherPlayer, playedCells);
         }
         else if (newPlayer == "2")
         {
           playedCells = playerTwoCell.Split(',');
-          currentPlayer.AddCordsList(playedCells);
-          List<List<string>> test2 = currentPlayer.GetCordsList();
-          Console.WriteLine("test2" + test2[0][1]);
+          currentPlayer.AddCordsList2(playedCells);
+          currentPlayer.AddPlayer2PlayedWord(newWord);
+          currentPlayer.MasterKiller2(otherPlayer, playedCells);
         }
         else
         {
           Console.WriteLine("no player");
         }
-        currentPlayer.MasterKiller(otherPlayer, playedCells);
 
       }
 
       // win check
-      bool newWinCheck = currentPlayer.WinCheck(currentPlayer);
-      if (newWinCheck)
+      if(currentPlayer.GetName() == "1")
       {
-        model.Add("winCheck", "true");
+        bool newWinCheck = currentPlayer.WinCheck1(currentPlayer);
+        if (newWinCheck)
+        {
+          model.Add("winCheck", "true");
+        }
+        else
+        {
+          model.Add("winCheck", "false");
+        }
       }
       else
       {
-        model.Add("winCheck", "false");
+        bool newWinCheck = currentPlayer.WinCheck2(currentPlayer);
+        if (newWinCheck)
+        {
+          model.Add("winCheck", "true");
+        }
+        else
+        {
+          model.Add("winCheck", "false");
+        }
       }
-
       // generate new array for each player
-
-      List<string> currentPlayerActiveCells = currentPlayer.GetCordsBundle(currentPlayer);
-      List<string> otherPlayerActiveCells = otherPlayer.GetCordsBundle(otherPlayer);
-      List<string> p1ActiveCells = new List<string>();
-      List<string> p2ActiveCells = new List<string>();
-
-      if (newPlayer == "1")
+    if (newPlayer == "1")
       {
+        List<string> currentPlayerActiveCells = currentPlayer.GetCordsBundle1(currentPlayer);
+        List<string> p1ActiveCells = new List<string>();
+        List<string> otherPlayerActiveCells = otherPlayer.GetCordsBundle2(otherPlayer);
+        List<string> p2ActiveCells = new List<string>();
         p1ActiveCells = currentPlayerActiveCells;
         p2ActiveCells = otherPlayerActiveCells;
-        Console.WriteLine("p1 "+ p1ActiveCells[8]);
-        Console.WriteLine("cpa1 "+currentPlayerActiveCells[8]);
+        model.Add("player1cells", p1ActiveCells);
+        model.Add("player2cells", p2ActiveCells);
       }
       else if (newPlayer == "2")
       {
+        List<string> currentPlayerActiveCells = currentPlayer.GetCordsBundle2(currentPlayer);
+
+        List<string> p1ActiveCells = new List<string>();
+
+        List<string> otherPlayerActiveCells = otherPlayer.GetCordsBundle1(otherPlayer);
+
+        List<string> p2ActiveCells = new List<string>();
+
         p2ActiveCells = currentPlayerActiveCells;
         p1ActiveCells = otherPlayerActiveCells;
+        model.Add("player1cells", p1ActiveCells);
+        model.Add("player2cells", p2ActiveCells);
       }
       else
       {
@@ -138,9 +170,8 @@ namespace Wordbase.Controllers
 
       model.Add("playerNum", newPlayer);
       model.Add("word", newWord);
-      // rename these to return the new values
-      model.Add("player1cells", p1ActiveCells);
-      model.Add("player2cells", p2ActiveCells);
+      // model.Add("player1cells", p1ActiveCells);
+      // model.Add("player2cells", p2ActiveCells);
       return View("Index", model);
     }
 

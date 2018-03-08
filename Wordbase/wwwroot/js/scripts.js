@@ -104,7 +104,7 @@ function reloadBoard(player, p1cells, p2cells){
     }
   }
   for(var i=0; i < p1cells.length; i++){
-    $("#"+p1cells[i]).addClass("player1color");
+    $("#" + p1cells[i]).addClass("player1color");
   }
   for(var i=0; i < p2cells.length; i++){
     $("#"+p2cells[i]).addClass("player2color");
@@ -167,9 +167,30 @@ $(document).ready(function() {
     // reloadBoard(1, p1Array, p2Array);
     // var player = playerTurn.getPlayer();
     var player = $("#playerNum").val();
-    var p1Array = $("#playerOneActiveCells").val();
-    var p2Array = $("#playerTwoActiveCells").val();
-    reloadBoard(player, p1Array, p2Array);
+    // var p1Array = $("#playerOneActiveCells").innerHTML;
+    var p1Array = $("#p1testArray").val();
+
+    // var p1cells1 = $("#playerOneActiveCells").val();
+
+    var p1cells1 = $("#playerOneActiveCells").val();
+    var p1Array1 = [];
+    for(var i = 0; i < p1cells1.length; i++)
+    {
+      p1Array1.push(p1cells1[i]);
+      // PlayerOneCells.push(p1cells[i].innerHTML);
+    }
+    var p2cells2 = $("#playerTwoActiveCells").val();
+    var p2Array2 = [];
+    for(var i = 0; i < p2cells2.length; i++)
+    {
+      p2Array2.push(p2cells2[i]);
+      // PlayerOneCells.push(p1cells[i].innerHTML);
+    }
+
+    console.log("p1 "+p1Array1);
+    console.log("p1 "+p1Array1[1]);
+    // var p2Array = $("#playerTwoActiveCells").val();
+    reloadBoard(player, p1Array1, p2Array2);
     isWord();
     // PlayerOneCells = [];
     // PlayerTwoCells = [];
