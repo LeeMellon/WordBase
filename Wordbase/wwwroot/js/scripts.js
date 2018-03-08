@@ -3,6 +3,8 @@ var cells = [];
 var playerTurn = new PlayerTurn;
 var PlayerOneCells = ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "J1"];
 var PlayerTwoCells = ["A13", "B13", "C13", "D13", "E13", "F13", "G13", "H13", "J13"];
+var PlayerOneBaseCells = ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "J1"];
+var PlayerTwoBaseCells = ["A13", "B13", "C13", "D13", "E13", "F13", "G13", "H13", "J13"];
 var PlayerOneTempCells = [];
 var PlayerTwoTempCells = [];
 
@@ -46,9 +48,11 @@ function myFunction(square)
             alert("Not a valid move");
           }
         }
+        else{
         PlayerOneTempCells.unshift(y);
         word += x;
         newword.append(x);
+      }
       }
     }
   }
@@ -74,9 +78,11 @@ function myFunction(square)
             alert("Not a valid move");
           }
         }
+        else{
         PlayerTwoTempCells.unshift(y);
         word += x;
         newword.append(x);
+      }
       }
     }
   }
@@ -90,6 +96,42 @@ function myFunction(square)
   console.log("P1 temp " + PlayerOneTempCells);
   console.log("P2 temp " + PlayerTwoTempCells);
   console.log("player "+ playerTurn.getPlayer());
+}
+
+
+function WinCheck(){
+  if(player == 1)
+  {
+    for ( var i  = 0; i < PlayerOneTempCells; i++)
+    {
+      for( var j = 0; j < PlayerTwoBaseCells; j++)
+      {
+        if(PlayerOneTempCells[i] == PlayerTwoBaseCells[i])
+        {
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+    }
+  }
+  else if(player == 2)
+  {
+    for ( var i  = 0; i < PlayerTwoTempCells; i++)
+    {
+      for( var j = 0; j < PlayerOneBaseCells; j++)
+      {
+        if(PlayerTwoTempCells[i] == PlayerOneBaseCells[i])
+        {
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+    }
+  }
 }
 
 function generateBoard(){
@@ -141,7 +183,6 @@ function isWord(){
 }
 
 function adjacent(y){
-
   var testArray = y.split(""); //Left
   var yourChar = testArray[0];
   var newX = String.fromCharCode(yourChar.charCodeAt(0) + 1) // increment letter by 1
@@ -164,25 +205,65 @@ function adjacent(y){
 
 
   var testArray = y.split(""); //Up
-  var yourChar = testArray[0];
-  var newNum = parseInt(testArray[1]);
-  newNum = newNum + 1;
-  testArray[1] = newNum;
-  var check = testArray.join('');
-  if(check == PlayerOneTempCells[0])
+  if (testArray.length > 2)
   {
-    return true;
+    var yourChar = testArray[0];
+    var middleNum = testArray[1];
+    var newNum = testArray[2];
+    newNum = newNum + 1;
+    testArray[1] = middleNum;
+    testArray[2] = newNum;
+  }
+  else
+  {
+    var yourChar = testArray[0];
+    var newNum = parseInt(testArray[1]);
+    var middleNum;
+    if (newNum == 9)
+    {
+      newNum = 0;
+      middleNum = 1;
+      testArray[1] = middleNum;
+      testArray[2] = newNum;
+      var check = testArray.join('');
+      console.log("this array test" + testArray);
+      if(check == PlayerOneTempCells[0])
+      {
+        return true;
+      }
+    }
   }
 
-  var testArray = y.replace(/ /g, '').split(''); //Down
-  var yourChar = testArray[0];
-  var newNum = testArray[1];
-  newNum = newNum - 1;
-  testArray[1] = newNum;
-  var check = testArray.join('');
-  if(check == PlayerOneTempCells[0])
-  {
-    return true;
+  var testArray = y.split('');//Down
+  if (testArray.length > 2){
+    var yourChar = testArray[0];
+    var middleNum = testArray[1];
+    var newNum = testArray[2];
+    if (newNum == 0)
+    {
+      middleNum = 9;
+      testArray.pop();
+      testArray[1] = middleNum;
+    }
+    else {
+      newNum = newNum - 1;
+      testArray[2] = newNum;
+    }
+    var check = testArray.join('');
+    if(check == PlayerOneTempCells[0])
+    {
+      return true;
+    }
+  } else {
+    var yourChar = testArray[0];
+    var newNum = testArray[1];
+    newNum = newNum - 1;
+    testArray[1] = newNum;
+    var check = testArray.join('');
+    if(check == PlayerOneTempCells[0])
+    {
+      return true;
+    }
   }
 
   var testArray = y.split(""); //UpLeft
@@ -338,15 +419,21 @@ $(document).ready(function() {
     // store play data in database
     if (playerTurn.getPlayer() == "1")
     {
-      console.log("Player 1 Turn End");
       playerTurn.setPlayer(2);
+      if(WinCheck)
+      {
+        $.confetti.start();
+      }
       $(".turn1").hide();
       $(".turn2").show();
     }
     else if (playerTurn.getPlayer() == "2")
     {
       playerTurn.setPlayer(1);
-      console.log("Player 2 Turn End");
+      if(WinCheck)
+      {
+        $.confetti.start();
+      }
       $(".turn2").hide();
       $(".turn1").show();
     }
