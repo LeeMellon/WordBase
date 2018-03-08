@@ -46,6 +46,7 @@ namespace Wordbase.Controllers
         model.Add("valid", "false");
         System.Console.WriteLine("false word");
       }
+      model.Add("playerNum", newPlayer);
       model.Add("word", newWord);
       model.Add("player1cells", newCells1);
       model.Add("player2cells", newCells2);
