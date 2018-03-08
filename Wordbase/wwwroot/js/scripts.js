@@ -33,28 +33,53 @@ function myFunction(square)
     } else {
       document.getElementById(square).style.backgroundColor = "#BB8FCE";
       if (!PlayerOneTempCells.includes(y)){
-        PlayerOneTempCells.push(y);
+        if(PlayerOneTempCells.length > 0)
+        {
+          if(adjacent(y))
+          {
+            PlayerOneTempCells.unshift(y);
+            word += x;
+            newword.append(x);
+          }
+          else {
+            document.getElementById(square).style.backgroundColor = "white";
+            alert("Not a valid move");
+          }
+        }
+        PlayerOneTempCells.unshift(y);
         word += x;
         newword.append(x);
       }
     }
-}
-
-if (player == "2")
-{
-  if (PlayerTwoTempCells.length == 0 && !PlayerTwoCells.includes(y))
+  }
+  if (player == "2")
   {
-    document.getElementById(square).style.backgroundColor = "white";
-    alert("Not a valid start");
-  } else {
-    document.getElementById(square).style.backgroundColor = "#F1948A";
-    if (!PlayerTwoTempCells.includes(y)){
-      PlayerTwoTempCells.push(y);
-      word += x;
-      newword.append(x);
+    if (PlayerTwoTempCells.length == 0 && !PlayerTwoCells.includes(y))
+    {
+      document.getElementById(square).style.backgroundColor = "white";
+      alert("Not a valid start");
+    } else {
+      document.getElementById(square).style.backgroundColor = "#F1948A";
+      if (!PlayerTwoTempCells.includes(y)){
+        if(PlayerTwoTempCells.length > 0)
+        {
+          if(adjacent(y))
+          {
+            PlayerTwoTempCells.unshift(y);
+            word += x;
+            newword.append(x);
+          }
+          else {
+            document.getElementById(square).style.backgroundColor = "white";
+            alert("Not a valid move");
+          }
+        }
+        PlayerTwoTempCells.unshift(y);
+        word += x;
+        newword.append(x);
+      }
     }
   }
-}
 
   // this.onclick=null;
 
@@ -114,6 +139,110 @@ function isWord(){
   var result = document.getElementById("isword").value;
   alert(result);
 }
+
+function adjacent(y){
+
+  var testArray = y.split(""); //Left
+  var yourChar = testArray[0];
+  var newX = String.fromCharCode(yourChar.charCodeAt(0) + 1) // increment letter by 1
+  testArray[0] = newX;
+  var check = testArray.join('');
+  if(check == PlayerOneTempCells[0])
+  {
+    return true;
+  }
+
+  var testArray = y.split(""); //Right
+  var yourChar = testArray[0];
+  var newX = String.fromCharCode(yourChar.charCodeAt(0) - 1) // increment letter by 1
+  testArray[0] = newX;
+  var check = testArray.join('');
+  if(check == PlayerOneTempCells[0])
+  {
+    return true;
+  }
+
+
+  var testArray = y.split(""); //Up
+  var yourChar = testArray[0];
+  var newNum = parseInt(testArray[1]);
+  newNum = newNum + 1;
+  testArray[1] = newNum;
+  var check = testArray.join('');
+  if(check == PlayerOneTempCells[0])
+  {
+    return true;
+  }
+
+  var testArray = y.replace(/ /g, '').split(''); //Down
+  var yourChar = testArray[0];
+  var newNum = testArray[1];
+  newNum = newNum - 1;
+  testArray[1] = newNum;
+  var check = testArray.join('');
+  if(check == PlayerOneTempCells[0])
+  {
+    return true;
+  }
+
+  var testArray = y.split(""); //UpLeft
+  var yourChar = testArray[0];
+  var newX = String.fromCharCode(yourChar.charCodeAt(0) + 1) // increment letter by 1
+  testArray[0] = newX;
+  var newNum = parseInt(testArray[1]);
+  newNum = newNum + 1;
+  testArray[1] = newNum;
+  var check = testArray.join('');
+  if(check == PlayerOneTempCells[0])
+  {
+    return true;
+  }
+
+
+  var testArray = y.split(""); //UpRight
+  var yourChar = testArray[0];
+  var newX = String.fromCharCode(yourChar.charCodeAt(0) - 1) // increment letter by 1
+  testArray[0] = newX;
+  var newNum = parseInt(testArray[1]);
+  newNum = newNum + 1;
+  testArray[1] = newNum;
+  var check = testArray.join('');
+  if(check == PlayerOneTempCells[0])
+  {
+    return true;
+  }
+
+
+  var testArray = y.split(""); //DownLeft
+  var yourChar = testArray[0];
+  var newX = String.fromCharCode(yourChar.charCodeAt(0) + 1) // increment letter by 1
+  testArray[0] = newX;
+  var newNum = testArray[1];
+  newNum = newNum - 1;
+  testArray[1] = newNum;
+  var check = testArray.join('');
+  if(check == PlayerOneTempCells[0])
+  {
+    return true;
+  }
+
+
+  var testArray = y.split(""); //DownRight
+  var yourChar = testArray[0];
+  var newX = String.fromCharCode(yourChar.charCodeAt(0) - 1) // increment letter by 1
+  testArray[0] = newX;
+  var newNum = testArray[1];
+  newNum = newNum - 1;
+  testArray[1] = newNum;
+  var check = testArray.join('');
+  if(check == PlayerOneTempCells[0])
+  {
+    return true;
+  }
+}
+
+
+
 
 //this was rewritten into myFunction
 // function to check if beginning square is valid starting point
