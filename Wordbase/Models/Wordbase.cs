@@ -72,8 +72,6 @@ namespace Wordbase.Models
           baseCords = currentPlayer.GetBase2();
         }
         bundle.AddRange(baseCords);
-        Console.WriteLine("baseCords" + baseCords[8]);
-        Console.WriteLine("bundle" + bundle[0]);
         return bundle;
       }
 
@@ -280,10 +278,10 @@ namespace Wordbase.Models
       }
 
 
-      public void MasterKiller(Player currentPlayer, string targetCord)
+      public void MasterKiller(Player opposingPlayer, string targetCord)
       {
         List<string> popList = new List<string>(){targetCord}; //list of removed coordinates
-        List<List<string>> playerWords = currentPlayer.GetCordsList();
+        List<List<string>> playerWords = opposingPlayer.GetCordsList();
 
         while(popList.Count > 0)
         {
@@ -294,10 +292,10 @@ namespace Wordbase.Models
               if(playerWords[i].Count > 0)
               {
 
-                if (currentPlayer.IsIn(playerWords[i], popList[0]) == true)
+                if (opposingPlayer.IsIn(playerWords[i], popList[0]) == true)
                 {
-                  int targetIndex = currentPlayer.GetCordIndex(playerWords[i], popList[0]);
-                  List<string> toPop = currentPlayer.DeleteAfterId(i, targetIndex);
+                  int targetIndex = opposingPlayer.GetCordIndex(playerWords[i], popList[0]);
+                  List<string> toPop = opposingPlayer.DeleteAfterId(i, targetIndex);
                   popList.AddRange(toPop);
                 }
               }
