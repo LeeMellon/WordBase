@@ -84,14 +84,14 @@ See https://www.learnhowtoprogram.com/c/database-basics-ee7c9fd3-fcd9-4fff-8b1d-
   ```
   dotnet restore
   ```
- 3. In the command line, type dotnet test. Enter. The tests will run.  When the tests are finished, output stating how many tests were run, how many tests passed, and how many tests were skipped will be displayed.  If any tests fail, details about the failures will be described in the console.  
-  ```
-  dotnet test
-  ```
+   3. In the command line, type dotnet test. Enter. The tests will run.  When the tests are finished, output stating how many tests were run, how many tests passed, and how many tests were skipped will be displayed.  If any tests fail, details about the failures will be described in the console.  
+    ```
+    dotnet test
+    ```
 
 ## Known Bugs
 
-_There are no know bugs_
+_There are no known bugs_
 
 ## Support and contact details
 
