@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using System;
 using Wordbase;
+using System.Linq;
 
 namespace Wordbase.Models
 {
@@ -18,12 +19,13 @@ namespace Wordbase.Models
       private int _rndScore;
       private int _playerScore;
 
-      public Player(string name, List<List<string>> cordsList, int playerScore = 0, int id =0)
+      public Player(string name, List<string> playedWords, List<List<string>> cordsList, int playerScore = 0, int id =0)
       {
         _id = id;
         _name = name;
-        _player1Base = new List<string>(){"A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "J1"};
-        _player2Base = new List<string>(){"A13", "B13", "C13", "D13", "E13", "F13", "G13", "H13", "J13"};
+        _playedWords = playedWords;
+        _player1Base = new List<string>(){"A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I13", "J1"};
+        _player2Base = new List<string>(){"A13", "B13", "C13", "D13", "E13", "F13", "G13", "H13", "I13", "J13"};
         _cordsList = cordsList;
         _playerScore = playerScore;
       }
@@ -85,8 +87,9 @@ namespace Wordbase.Models
         _playedWords.Add(playerWord);
       }
 
-      public void AddCordsList(List<string> cords)
+      public void AddCordsList(string[] newCords)
       {
+        List<string> cords = newCords.ToList();
         _cordsList.Add(cords);
       }
 
@@ -278,10 +281,10 @@ namespace Wordbase.Models
       }
 
 
-      public void MasterKiller(Player opposingPlayer, string targetString)
+      public void MasterKiller(Player opposingPlayer, string[] targetCords)
       {
-        string newTargetString = targetString;
-        string[] targetCords = newTargetString.Split(',');
+        // string newTargetString = targetString;
+        // string[] targetCords = newTargetString.Split(',');
         List<List<string>> playerWords = opposingPlayer.GetCordsList();
 
         foreach(string cord in targetCords)

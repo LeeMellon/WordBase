@@ -1,8 +1,8 @@
 var word = "";
 var cells = [];
 var playerTurn = new PlayerTurn;
-var PlayerOneCells = ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "J1"];
-var PlayerTwoCells = ["A13", "B13", "C13", "D13", "E13", "F13", "G13", "H13", "J13"];
+var PlayerOneCells = ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1", "J1"];
+var PlayerTwoCells = ["A13", "B13", "C13", "D13", "E13", "F13", "G13", "H13", "I13", "J13"];
 var PlayerOneTempCells = [];
 var PlayerTwoTempCells = [];
 
@@ -72,6 +72,7 @@ function generateBoard(){
   PlayerOneTempCells = [];
   PlayerTwoTempCells = [];
   var board = [];
+
   var letters = ["A","B","C","D","E","F","G","H","I","J"];
   for(var i  = 1; i <= 13; i++)
   {
@@ -92,7 +93,7 @@ function reloadBoard(player, p1cells, p2cells){
   // feed in player
   // feed in array for player1cells
   // feed in array for player2cells
-  player = playerTurn.getPlayer();
+  // player = playerTurn.getPlayer();
   var letters = ["A","B","C","D","E","F","G","H","I","J"];
   for(var i  = 1; i <= 13; i++)
   {
@@ -103,7 +104,7 @@ function reloadBoard(player, p1cells, p2cells){
     }
   }
   for(var i=0; i < p1cells.length; i++){
-    $("#" + p1cells[i]).addClass("player1color");
+    $("#"+p1cells[i]).addClass("player1color");
   }
   for(var i=0; i < p2cells.length; i++){
     $("#"+p2cells[i]).addClass("player2color");
@@ -114,35 +115,6 @@ function isWord(){
   var result = document.getElementById("isword").value;
   alert(result);
 }
-
-//this was rewritten into myFunction
-// function to check if beginning square is valid starting point
-// function startingCheck(player,square){
-//     if (player == "1" && PlayerOneCells.length == 0)
-//     {
-//       if(!PlayerOneCells.includes(square))
-//       {
-//         document.getElementById(square).style.backgroundColor = "white";
-//         alert("Not a valid start");
-//         return false;
-//       }
-//       else {
-//         return true;
-//       }
-//     }
-//   if (player == "2" && PlayerTwoCells.length == 0)
-//   {
-//     if (!PlayerTwoCells.includes(square))
-//     {
-//       document.getElementById(square).style.backgroundColor = "white";
-//       alert("Not a valid start");
-//       return false;
-//     }
-//     else {
-//       return true;
-//     }
-//   }
-// }
 
 
 // function to check if selected square is adjacent to previous choice
@@ -174,7 +146,6 @@ $(document).ready(function() {
   });
 
   $("#reload").click(function(){
-
     // reloadBoard(1, ["A1", "A2", "B3", "C4"], ["J10", "I9", "H8", "I8", "I7"]);
     // var p1cells = ["A1", "A2", "B3", "C4"];
 
@@ -196,6 +167,8 @@ $(document).ready(function() {
     // reloadBoard(1, p1Array, p2Array);
     // var player = playerTurn.getPlayer();
     var player = $("#playerNum").val();
+    var p1Array = $("#playerOneActiveCells").val();
+    var p2Array = $("#playerTwoActiveCells").val();
     reloadBoard(player, p1Array, p2Array);
     isWord();
     // PlayerOneCells = [];

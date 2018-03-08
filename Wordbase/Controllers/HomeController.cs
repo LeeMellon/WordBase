@@ -20,7 +20,7 @@ namespace Wordbase.Controllers
     {
       List<List<string>> empty = new List<List<string>>();
       Dictionary<string, object> model = new Dictionary<string, object>();
-
+      List<string> playedWordsBlank = new List<string>();
       string newPlayer = Request.Form["newplayer"];
       string oldPlayer = "";
       if (newPlayer == "1")
@@ -35,22 +35,19 @@ namespace Wordbase.Controllers
       {
         Console.WriteLine("no player");
       }
-      Player currentPlayer = new Player(newPlayer, empty, 0);
-      Player otherPlayer = new Player(oldPlayer, empty, 0);
+      Player currentPlayer = new Player(newPlayer,playedWordsBlank, empty, 0);
+      currentPlayer.Save();
+      Player otherPlayer = new Player(oldPlayer, playedWordsBlank, empty, 0);
+      otherPlayer.Save();
 
       string playerOneCell = Request.Form["newp1cells"];
-      string[] newCells1 = playerOneCell.Split(',');
-
-
-      // System.Console.WriteLine("newCells: " + newCells[0]);
-      // List<string[]> playerOneCells = new List<string[]>() {newCells};
-      // System.Console.WriteLine("playerOneCells" + playerOneCells);
+      // string[] newCells1 = playerOneCell.Split(',');
 
       string playerTwoCell = Request.Form["newp2cells"];
-      string[] newCells2 = playerTwoCell.Split(',');
-
+      // string[] newCells2 = playerTwoCell.Split(',');
 
       string newWord = Request.Form["newword"];
+
       bool isUsed = currentPlayer.IsUsed(currentPlayer, newWord);
       if(isUsed == true)
       {
@@ -73,7 +70,6 @@ namespace Wordbase.Controllers
 
       if (!isUsed && isWord)
       {
-        // save to players list
         currentPlayer.AddPlayedWord(newWord);
 
         // master killer
@@ -85,10 +81,16 @@ namespace Wordbase.Controllers
         {
           // playedCells = newCells1;
           playedCells = playerOneCell.Split(',');
+          currentPlayer.AddCordsList(playedCells);
+          List<List<string>> test1 = currentPlayer.GetCordsList();
+          Console.WriteLine("test1" + test1[0][1]);
         }
         else if (newPlayer == "2")
         {
           playedCells = playerTwoCell.Split(',');
+          currentPlayer.AddCordsList(playedCells);
+          List<List<string>> test2 = currentPlayer.GetCordsList();
+          Console.WriteLine("test2" + test2[0][1]);
         }
         else
         {
@@ -100,33 +102,32 @@ namespace Wordbase.Controllers
 
       // win check
       bool newWinCheck = currentPlayer.WinCheck(currentPlayer);
+      if (newWinCheck)
+      {
+        model.Add("winCheck", "true");
+      }
+      else
+      {
+        model.Add("winCheck", "false");
+      }
 
       // generate new array for each player
 
-      List<string> currentPlayerActiveCells = currentPlayer.MasterCordsList(currentPlayer);
-      List<string> otherPlayerActiveCells = otherPlayer.MasterCordsList(otherPlayer);
+      List<string> currentPlayerActiveCells = currentPlayer.GetCordsBundle(currentPlayer);
+      List<string> otherPlayerActiveCells = otherPlayer.GetCordsBundle(otherPlayer);
       List<string> p1ActiveCells = new List<string>();
       List<string> p2ActiveCells = new List<string>();
 
       if (newPlayer == "1")
       {
         p1ActiveCells = currentPlayerActiveCells;
+        p2ActiveCells = otherPlayerActiveCells;
+        Console.WriteLine("p1 "+ p1ActiveCells[8]);
+        Console.WriteLine("cpa1 "+currentPlayerActiveCells[8]);
       }
       else if (newPlayer == "2")
       {
         p2ActiveCells = currentPlayerActiveCells;
-      }
-      else
-      {
-        Console.WriteLine("no player");
-      }
-
-      if (newPlayer == "2")
-      {
-        p2ActiveCells = otherPlayerActiveCells;
-      }
-      else if (newPlayer == "1")
-      {
         p1ActiveCells = otherPlayerActiveCells;
       }
       else
@@ -134,7 +135,7 @@ namespace Wordbase.Controllers
         Console.WriteLine("no player");
       }
 
-      model.Add("winCheck", newWinCheck);
+
       model.Add("playerNum", newPlayer);
       model.Add("word", newWord);
       // rename these to return the new values
