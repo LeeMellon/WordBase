@@ -83,7 +83,8 @@ namespace Wordbase.Controllers
         model.Add("valid", "false");
       }
 
-      if (!isUsed && isWord && currentPlayer.GetName() == "1")
+      // if (!isUsed && isWord && currentPlayer.GetName() == "1")
+      if (!isUsed && isWord)
       {
 
         string[] playedCells = new string[]{};

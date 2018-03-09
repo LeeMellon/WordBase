@@ -89,7 +89,6 @@ function generateBoard(){
 }
 
 function reloadBoard(player, p1cells, p2cells){
-
   var letters = ["A","B","C","D","E","F","G","H","I","J"];
   for(var i  = 1; i <= 13; i++)
   {
@@ -107,9 +106,79 @@ function reloadBoard(player, p1cells, p2cells){
   }
 }
 
+function masterReload() {
+  var p1cells = document.getElementsByClassName("p1");
+  var p1Array = [];
+  var p2cells = document.getElementsByClassName("p2");
+  var p2Array = [];
+  for(var i = 0; i < p1cells.length; i++)
+  {
+    p1Array.push(p1cells[i].innerHTML);
+    PlayerOneCells.push(p1cells[i].innerHTML);
+  }
+  for(var i = 0; i < p2cells.length; i++)
+  {
+    p2Array.push(p2cells[i].innerHTML);
+    PlayerTwoCells.push(p2cells[i].innerHTML);
+  }
+
+  var player = $("#playerNum").val();
+  var p1cells1 = $("#playerOneActiveCells").val();
+  var p1Array1 = p1cells1.split(',');
+  var p2cells2 = $("#playerTwoActiveCells").val();
+  var p2Array2 = p2cells2.split(',');
+
+  console.log("p1 "+p1cells1);
+  console.log("p1 "+p1Array1);
+  console.log("p2 "+p2Array2);
+
+  reloadBoard(player, p1Array1, p2Array2);
+  // isWord();
+  // PlayerOneCells = [];
+  // PlayerTwoCells = [];
+}
+
 function isWord(){
   var result = document.getElementById("isword").value;
   alert(result);
+}
+
+function runGameChecks() {
+  var player = $("#playerNum").val();
+  var word = $("#word").val();
+  var used = $("#used").val();
+  var valid = $("#valid").val();
+  var wincheck = $("#wincheck").val();
+  if (wincheck == "true") {
+    alert ("Player " + player + " wins!");
+  } else if (used == "true") {
+    alert (word + " has already been played this game.  Try again.")
+  } else if (valid == "false") {
+    alert (word + " is not a word.  Try again.");
+  } else {
+    switchPlayers();
+  }
+}
+
+function switchPlayers() {
+  var player = $("#playerNum").val();
+  if (player == "1")
+  {
+    console.log("Player 1 Turn End");
+    playerTurn.setPlayer(2);
+    $(".turn1").hide();
+    $(".turn2").show();
+  }
+  else if (player == "2")
+  {
+    playerTurn.setPlayer(1);
+    console.log("Player 2 Turn End");
+    $(".turn2").hide();
+    $(".turn1").show();
+  }
+  word = "";
+  cells = [];
+  $("#newword").text("Current Word: ");
 }
 
 
@@ -139,6 +208,8 @@ $(document).ready(function() {
     $("#newp1cells").val(PlayerOneTempCells);
     $("#newp2cells").val(PlayerTwoTempCells);
     $("#newplayer").val(playerTurn.getPlayer());
+    masterReload();
+    runGameChecks();
   });
 
   $("#reload").click(function(){
@@ -168,7 +239,8 @@ $(document).ready(function() {
     console.log("p2 "+p2Array2);
 
     reloadBoard(player, p1Array1, p2Array2);
-    isWord();
+    runGameChecks();
+    // isWord();
     // PlayerOneCells = [];
     // PlayerTwoCells = [];
 
