@@ -34,3 +34,7 @@ button{
 .player2color {
   background-color: #F1948A;
 }
+
+.unseen {
+  display: none;
+}

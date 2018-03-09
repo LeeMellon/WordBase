@@ -168,12 +168,19 @@ $(document).ready(function() {
     // var player = playerTurn.getPlayer();
     var player = $("#playerNum").val();
     // var p1Array = $("#playerOneActiveCells").innerHTML;
-    var p1Array = $("#p1testArray").val();
+    var p1cells11 = $("#p1testArray").val();
+    var p1Array11 = [];
+    for(var i = 0; i < p1cells11.length; i++)
+    {
+      p1Array11.push(p1cells11[i]);
+      // PlayerOneCells.push(p1cells[i].innerHTML);
+    }
 
     // var p1cells1 = $("#playerOneActiveCells").val();
 
     var p1cells1 = $("#playerOneActiveCells").val();
     var p1Array1 = [];
+
     for(var i = 0; i < p1cells1.length; i++)
     {
       p1Array1.push(p1cells1[i]);
@@ -186,7 +193,7 @@ $(document).ready(function() {
       p2Array2.push(p2cells2[i]);
       // PlayerOneCells.push(p1cells[i].innerHTML);
     }
-
+    console.log("p1 "+p1Array1);
     console.log("p1 "+p1Array1);
     console.log("p1 "+p1Array1[1]);
     // var p2Array = $("#playerTwoActiveCells").val();

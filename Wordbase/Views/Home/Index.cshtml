@@ -6,6 +6,7 @@
   <h2 class="turn1">Player 1 Turn</h2>
   <h2 class="turn2">Player 2 Turn</h2>
   <h3 id="newword">Current Word: </h3>
+  <div class="unseen">
   @if (@Model != null)
   {
     <input id="isplayed" type="text" name="isplayed" value=@Model["used"]>
@@ -15,20 +16,21 @@
     <input id="wincheck" type="text" name="wincheck" value=@Model["winCheck"]>
     <input id="playerOneActiveCells" type="text" name="p1cells" value=@Model["player1cells"]>
     <input id="playerTwoActiveCells" type="text" name="p2cells" value=@Model["player2cells"]>
-    <ul id="p1testArray">
+    <ul class="unseen" id="p1testArray">
       @foreach (var cell1 in @Model["player1cells"])
       {
         <li class="p1">@cell1</li>
       }
     </ul>
 
-    <ul>
+    <ul class="hidden">
       @foreach (var cell2 in @Model["player2cells"])
       {
         <li class="p2">@cell2</li>
       }
     </ul>
   }
+</div>
   <form id="verifyForm" action="/" method="post">
     <input id="newp1cells" type="hidden" name="newp1cells" value="">
     <input id="newp2cells" type="hidden" name="newp2cells" value="">
@@ -40,6 +42,7 @@
   <button id="reload" type="submit" class="btn btn-warning">Reload Board</button>
   <button id="reset" type="submit" class="btn btn-warning">New Game</button>
 </center>
+</div>
 <div class="container">
   <div id="row1" class="row">
     <div class="col-sm-1 spacer"></div>

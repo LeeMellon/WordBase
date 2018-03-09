@@ -144,6 +144,8 @@ namespace Wordbase.Controllers
         List<string> p2ActiveCells = new List<string>();
         p1ActiveCells = currentPlayerActiveCells;
         p2ActiveCells = otherPlayerActiveCells;
+        // string player1ActiveCells = p1ActiveCells.ToString();
+
         model.Add("player1cells", p1ActiveCells);
         model.Add("player2cells", p2ActiveCells);
       }
@@ -159,6 +161,7 @@ namespace Wordbase.Controllers
 
         p2ActiveCells = currentPlayerActiveCells;
         p1ActiveCells = otherPlayerActiveCells;
+
         model.Add("player1cells", p1ActiveCells);
         model.Add("player2cells", p2ActiveCells);
       }
