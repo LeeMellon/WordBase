@@ -16,14 +16,14 @@
     <input id="wincheck" type="text" name="wincheck" value=@Model["winCheck"]>
     <input id="playerOneActiveCells" type="text" name="p1cells" value=@Model["player1cells"]>
     <input id="playerTwoActiveCells" type="text" name="p2cells" value=@Model["player2cells"]>
-    <ul class="unseen" id="p1testArray">
+    <ul>
       @foreach (var cell1 in @Model["player1cells"])
       {
         <li class="p1">@cell1</li>
       }
     </ul>
 
-    <ul class="hidden">
+    <ul>
       @foreach (var cell2 in @Model["player2cells"])
       {
         <li class="p2">@cell2</li>

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Wordbase.Models;
 using System;
-using System.Linq;
 
 namespace Wordbase.Controllers
 {
@@ -135,16 +134,14 @@ namespace Wordbase.Controllers
           model.Add("winCheck", "false");
         }
       }
+
       // generate new array for each player
     if (newPlayer == "1")
       {
         List<string> currentPlayerActiveCells = currentPlayer.GetCordsBundle1(currentPlayer);
-        List<string> p1ActiveCells = new List<string>();
         List<string> otherPlayerActiveCells = otherPlayer.GetCordsBundle2(otherPlayer);
-        List<string> p2ActiveCells = new List<string>();
-        p1ActiveCells = currentPlayerActiveCells;
-        p2ActiveCells = otherPlayerActiveCells;
-        // string player1ActiveCells = p1ActiveCells.ToString();
+        string p1ActiveCells = String.Join(",", currentPlayerActiveCells);
+        string p2ActiveCells = String.Join(",", otherPlayerActiveCells);
 
         model.Add("player1cells", p1ActiveCells);
         model.Add("player2cells", p2ActiveCells);
@@ -152,15 +149,9 @@ namespace Wordbase.Controllers
       else if (newPlayer == "2")
       {
         List<string> currentPlayerActiveCells = currentPlayer.GetCordsBundle2(currentPlayer);
-
-        List<string> p1ActiveCells = new List<string>();
-
         List<string> otherPlayerActiveCells = otherPlayer.GetCordsBundle1(otherPlayer);
-
-        List<string> p2ActiveCells = new List<string>();
-
-        p2ActiveCells = currentPlayerActiveCells;
-        p1ActiveCells = otherPlayerActiveCells;
+        string p2ActiveCells = String.Join(",", currentPlayerActiveCells);
+        string p1ActiveCells = String.Join(",", otherPlayerActiveCells);
 
         model.Add("player1cells", p1ActiveCells);
         model.Add("player2cells", p2ActiveCells);
@@ -169,21 +160,10 @@ namespace Wordbase.Controllers
       {
         Console.WriteLine("no player");
       }
-
-
       model.Add("playerNum", newPlayer);
       model.Add("word", newWord);
-      // model.Add("player1cells", p1ActiveCells);
-      // model.Add("player2cells", p2ActiveCells);
       return View("Index", model);
     }
-
-
-    //     return newWord;
-    //   }
-    //   else
-    //   return RedirectToAction("Index");
-    // }
 
   }
 }

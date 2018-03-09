@@ -89,11 +89,7 @@ function generateBoard(){
 }
 
 function reloadBoard(player, p1cells, p2cells){
-  // 1, ["A1", "A2", "B3", "C4"], ["J10", "I9", "H8", "I8", "I7"]
-  // feed in player
-  // feed in array for player1cells
-  // feed in array for player2cells
-  // player = playerTurn.getPlayer();
+
   var letters = ["A","B","C","D","E","F","G","H","I","J"];
   for(var i  = 1; i <= 13; i++)
   {
@@ -146,9 +142,6 @@ $(document).ready(function() {
   });
 
   $("#reload").click(function(){
-    // reloadBoard(1, ["A1", "A2", "B3", "C4"], ["J10", "I9", "H8", "I8", "I7"]);
-    // var p1cells = ["A1", "A2", "B3", "C4"];
-
     var p1cells = document.getElementsByClassName("p1");
     var p1Array = [];
     var p2cells = document.getElementsByClassName("p2");
@@ -164,39 +157,16 @@ $(document).ready(function() {
       PlayerTwoCells.push(p2cells[i].innerHTML);
     }
 
-    // reloadBoard(1, p1Array, p2Array);
-    // var player = playerTurn.getPlayer();
     var player = $("#playerNum").val();
-    // var p1Array = $("#playerOneActiveCells").innerHTML;
-    var p1cells11 = $("#p1testArray").val();
-    var p1Array11 = [];
-    for(var i = 0; i < p1cells11.length; i++)
-    {
-      p1Array11.push(p1cells11[i]);
-      // PlayerOneCells.push(p1cells[i].innerHTML);
-    }
-
-    // var p1cells1 = $("#playerOneActiveCells").val();
-
     var p1cells1 = $("#playerOneActiveCells").val();
-    var p1Array1 = [];
-
-    for(var i = 0; i < p1cells1.length; i++)
-    {
-      p1Array1.push(p1cells1[i]);
-      // PlayerOneCells.push(p1cells[i].innerHTML);
-    }
+    var p1Array1 = p1cells1.split(',');
     var p2cells2 = $("#playerTwoActiveCells").val();
-    var p2Array2 = [];
-    for(var i = 0; i < p2cells2.length; i++)
-    {
-      p2Array2.push(p2cells2[i]);
-      // PlayerOneCells.push(p1cells[i].innerHTML);
-    }
+    var p2Array2 = p2cells2.split(',');
+
+    console.log("p1 "+p1cells1);
     console.log("p1 "+p1Array1);
-    console.log("p1 "+p1Array1);
-    console.log("p1 "+p1Array1[1]);
-    // var p2Array = $("#playerTwoActiveCells").val();
+    console.log("p2 "+p2Array2);
+
     reloadBoard(player, p1Array1, p2Array2);
     isWord();
     // PlayerOneCells = [];
@@ -208,14 +178,15 @@ $(document).ready(function() {
     event.preventDefault();
     // run a bunch of checks here for valid play
     // store play data in database
-    if (playerTurn.getPlayer() == "1")
+    var player = $("#playerNum").val();
+    if (player == "1")
     {
       console.log("Player 1 Turn End");
       playerTurn.setPlayer(2);
       $(".turn1").hide();
       $(".turn2").show();
     }
-    else if (playerTurn.getPlayer() == "2")
+    else if (player == "2")
     {
       playerTurn.setPlayer(1);
       console.log("Player 2 Turn End");
